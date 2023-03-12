@@ -16,16 +16,19 @@ const cockDisplay = drinks => {
                 <div class="card-body">
                     <h5 class="card-title">${drink.strDrink}</h5>
                     <p class="card-text">${drink.strInstructions.slice(0, 80)}</p>
-                    <button onclick="drinkDetail(${drink.idDrink})" class="btn btn-primary">See Detail</button>
+                    <button onclick="drinkDetail(${drink.idDrink})" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#drinkModal">See Detail</button>
                 </div>
             </div>
         `;
         drinkContainer.appendChild(div)
+        loader(false)
+
         // console.log(drink)
     });
 };
 
 const searchDrink = () => {
+    loader(true)
     const searchField = document.getElementById('search-field');
     const searchText = searchField.value;
     cockLoad(searchText);
@@ -48,7 +51,25 @@ const drinkDetail = id => {
 };
 
 const drinkDetailDisplay = detail => {
-    console.log(detail)
+    const drinkModalLabel = document.getElementById('drinkModalLabel');
+    drinkModalLabel.innerText = detail.strDrink;
+
+    const drinkDetail = document.getElementById('drink-detail');
+    drinkDetail.innerHTML = `
+        <p><b>Date:</b> ${detail.dateModified}</p>
+        <p><b>Catagory:</b> ${detail.strCategory ? detail.strCategory : 'No category found'}</p>
+        <p><b>Alternate:</b> ${detail.strDrinkAlternate ? detail.strDrinkAlternate : 'No Alternate Drink found'}</p>
+    `
+
+};
+
+const loader = isLoading => {
+    const loaderSpinnerr = document.getElementById('loader')
+    if (isLoading) {
+        loaderSpinnerr.classList.remove('d-none')
+    } else {
+        loaderSpinnerr.classList.add('d-none')
+    }
 }
 
 
