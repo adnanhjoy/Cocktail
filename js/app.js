@@ -16,11 +16,12 @@ const cockDisplay = drinks => {
                 <div class="card-body">
                     <h5 class="card-title">${drink.strDrink}</h5>
                     <p class="card-text">${drink.strInstructions.slice(0, 80)}</p>
+                    <button onclick="drinkDetail(${drink.idDrink})" class="btn btn-primary">See Detail</button>
                 </div>
             </div>
         `;
         drinkContainer.appendChild(div)
-        console.log(drink)
+        // console.log(drink)
     });
 };
 
@@ -38,6 +39,17 @@ document.getElementById('search-field').addEventListener('keypress', function (e
     if (event.key === 'Enter') {
         searchDrink();
     }
-})
+});
+
+const drinkDetail = id => {
+    fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)
+        .then(res => res.json())
+        .then(data => drinkDetailDisplay(data.drinks[0]))
+};
+
+const drinkDetailDisplay = detail => {
+    console.log(detail)
+}
+
 
 cockLoad('margarita')
