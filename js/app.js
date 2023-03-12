@@ -6,6 +6,7 @@ const cockLoad = (search) => {
 
 const cockDisplay = drinks => {
     const drinkContainer = document.getElementById('drink-container');
+    drinkContainer.textContent = '';
     drinks.forEach(drink => {
         const div = document.createElement('div');
         div.classList.add('col');
@@ -23,6 +24,20 @@ const cockDisplay = drinks => {
     });
 };
 
+const searchDrink = () => {
+    const searchField = document.getElementById('search-field');
+    const searchText = searchField.value;
+    cockLoad(searchText);
+}
 
+document.getElementById('search-button').addEventListener('click', function () {
+    searchDrink();
+});
+
+document.getElementById('search-field').addEventListener('keypress', function (event) {
+    if (event.key === 'Enter') {
+        searchDrink();
+    }
+})
 
 cockLoad('margarita')
